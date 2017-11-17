@@ -271,15 +271,7 @@ namespace WindowsFormsApp1
 
         private void Cook_Click(object sender, EventArgs e)
         {
-           /* if (!pan.ReadyToGo)
-
-            {
-
-                MessageBox.Show("У нас не все готово к приготовлению", "Ошибка логики", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                return;
-
-            }*/
+           
 
 
 
