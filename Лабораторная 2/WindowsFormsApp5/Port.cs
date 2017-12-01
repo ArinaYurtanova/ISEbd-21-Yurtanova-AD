@@ -9,6 +9,7 @@ namespace WindowsFormsApp5
 {
     class Port
     {
+
         ClassArray<ITransport> port;
         List<ClassArray<ITransport>> portStages;
         int countPlaces = 20;
@@ -81,5 +82,4 @@ namespace WindowsFormsApp5
 
         }
     }
-
 }

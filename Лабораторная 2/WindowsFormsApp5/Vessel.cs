@@ -36,7 +36,10 @@ namespace WindowsFormsApp5
             countPassengers = 0;
             return count;
         }
-
+        public virtual void SetMainColor(Color color)
+        {
+            ColorBody = color;
+        }
 
     }
 }

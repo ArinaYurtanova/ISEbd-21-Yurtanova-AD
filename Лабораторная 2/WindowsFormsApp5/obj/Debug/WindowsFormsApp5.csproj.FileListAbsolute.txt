@@ -19,14 +19,15 @@ C:\Users\User\source\repos\Лабораторная 2 — копия\WindowsForm
 C:\Users\User\source\repos\Лабораторная 2 — копия\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\Лабораторная 2 — копия\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.exe
 C:\Users\User\source\repos\Лабораторная 2 — копия\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.pdb
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\bin\Debug\WindowsFormsApp5.exe.config
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\bin\Debug\WindowsFormsApp5.exe
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\bin\Debug\WindowsFormsApp5.pdb
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csprojResolveAssemblyReference.cache
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Form1.resources
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Form2.resources
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Properties.Resources.resources
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csproj.GenerateResource.Cache
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csproj.CoreCompileInputs.cache
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.exe
-C:\Users\User\source\repos\ГитХаб\Лабораторная 4\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.pdb
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\bin\Debug\WindowsFormsApp5.exe.config
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\bin\Debug\WindowsFormsApp5.exe
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\bin\Debug\WindowsFormsApp5.pdb
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csprojResolveAssemblyReference.cache
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Form1.resources
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Form2.resources
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Properties.Resources.resources
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csproj.GenerateResource.Cache
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.exe
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.pdb
+C:\Users\User\source\repos\ГитХаб\Лабораторная 5\WindowsFormsApp5\obj\Debug\WindowsFormsApp5.Form3.resources
