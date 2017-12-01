@@ -15,5 +15,6 @@ namespace WindowsFormsApp5
         void loadPassenger(int count);
         int getPassenger();
         void SetMainColor(Color color);
+        string getInfo();
     }
 }

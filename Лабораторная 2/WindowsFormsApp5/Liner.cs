@@ -22,6 +22,23 @@ namespace WindowsFormsApp5
             this.aquapark = aquapark;
             this.restaurant = restaurant;
         }
+        public Liner(string info) : base(info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 9)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                MaxCountPassengers = Convert.ToInt32(strs[1]);
+                Weight = Convert.ToInt32(strs[2]);
+                ColorBody = Color.FromName(strs[3]);
+                pool = Convert.ToBoolean(strs[4]);
+                palyb = Convert.ToBoolean(strs[5]);
+                aquapark = Convert.ToBoolean(strs[6]);
+                restaurant = Convert.ToBoolean(strs[7]);
+                dopColor = Color.FromName(strs[8]);
+
+            }
+        }
         protected override void drawUsualShip(Graphics g)
         {
 
@@ -55,10 +72,16 @@ namespace WindowsFormsApp5
                 Brush br = new SolidBrush(dopColor);
                 g.FillRectangle(br, startPosX, startPosY + 20, 20, 20);
             }
+
         }
         public void SetDopColor(Color color)
         {
             dopColor = color;
+        }
+        public override string getInfo()
+        {
+            return MaxSpeed + ";" + MaxCountPassengers + ";" + Weight + ";" + ColorBody.Name + ";" + pool + ";" + aquapark + ";" + palyb + ";" + restaurant + ";" + dopColor.Name;
+
         }
     }
 }

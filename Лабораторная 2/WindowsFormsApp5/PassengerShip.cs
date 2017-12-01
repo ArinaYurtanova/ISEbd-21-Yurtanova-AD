@@ -76,6 +76,21 @@ namespace WindowsFormsApp5
             startPosY = rand.Next(10, 200);
 
         }
+        public PassengerShip(string info)
+        {
+            string[] strs = info.Split(';');
+            if (strs.Length == 4)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                MaxCountPassengers = Convert.ToInt32(strs[1]);
+                Weight = Convert.ToInt32(strs[2]);
+                ColorBody = Color.FromName(strs[3]);
+            }
+            this.countPassengers = 0;
+            Random rand = new Random();
+            startPosX = rand.Next(10, 200);
+            startPosY = rand.Next(10, 200);
+        }
         public override void moveShip(Graphics g)
         {
             startPosX += (MaxSpeed * 50 / (float)Weight / (countPassengers == 0 ? 1 : countPassengers));
@@ -97,5 +112,10 @@ namespace WindowsFormsApp5
             g.DrawLine(pen, startPosX + 50, startPosY - 5, startPosX + 100, startPosY + 40);
             g.DrawLine(pen, startPosX + 50, startPosY + 40, startPosX + 50, startPosY - 5);
         }
+        public override string getInfo()
+        {
+            return MaxSpeed + ";" + MaxCountPassengers + ";" + Weight + ";" + ColorBody.Name;
+        }
+
     }
 }
