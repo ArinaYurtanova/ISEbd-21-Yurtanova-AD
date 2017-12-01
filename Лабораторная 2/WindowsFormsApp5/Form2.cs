@@ -66,7 +66,7 @@ namespace WindowsFormsApp5
                     }
                     else
                     {
-                        MessageBox.Show("Извинте, на этом месте нет машины");
+                        MessageBox.Show("Извинте, на этом месте нет корабля");
                     }
                 }
             }
@@ -119,10 +119,61 @@ namespace WindowsFormsApp5
                 }
                 else
                 {
-                    MessageBox.Show("Машину не удалось поставить");
+                    MessageBox.Show("Корабль не удалось поставить");
                 }
             }
         }
 
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (port.SaveData(saveFileDialog1.FileName))
+                {
+                    MessageBox.Show("Сохранение прошло успешно", "",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не сохранилось", "",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+        private void загрузитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (port.LoadData(openFileDialog1.FileName))
+                {
+                    MessageBox.Show("Загрузили", "",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Не загрузили", "",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                Draw();
+            }
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
     }
 }

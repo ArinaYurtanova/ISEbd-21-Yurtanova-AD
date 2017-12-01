@@ -18,6 +18,7 @@ namespace WindowsFormsApp5
         public virtual double Weight { protected set; get; }
         public abstract void moveShip(Graphics g);
         public abstract void drawShip(Graphics g);
+        public abstract string getInfo();
         public void setPosition(int x, int y)
         {
             startPosX = x;
