@@ -56,5 +56,9 @@ namespace WindowsFormsApp5
                 g.FillRectangle(br, startPosX, startPosY + 20, 20, 20);
             }
         }
+        public void SetDopColor(Color color)
+        {
+            dopColor = color;
+        }
     }
 }

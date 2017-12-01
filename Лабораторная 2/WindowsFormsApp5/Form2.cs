@@ -13,6 +13,7 @@ namespace WindowsFormsApp5
     public partial class Form2 : Form
     {
         Port port;
+        Form3 form;
         public Form2()
         {
             InitializeComponent();
@@ -39,49 +40,14 @@ namespace WindowsFormsApp5
 
 
 
-        
-
-        private void buttonSetShip_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }
 
 
 
-        private void buttonSetLiner_Click(object sender, EventArgs e)
-        {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ColorDialog dialogDop = new ColorDialog();
-                if (dialogDop.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    var ship = new Liner(100, 4, 1000, dialog.Color, true, true, true, true, dialogDop.Color);
-                    int place = port.PutShipInPort(ship);
-                    Draw();
-                    MessageBox.Show("Ваше место: " + place);
-                }
-            }
-        }
-
-        private void pictureBox1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonSetShip_Click_1(object sender, EventArgs e)
-        {
-            ColorDialog dialog = new ColorDialog();
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                var ship = new PassengerShip(100, 4, 1000, dialog.Color);
-                int place = port.PutShipInPort(ship);
-                Draw();
-                MessageBox.Show("Ваше место: " + place);
-            }
-        }
-
-        private void buttonTakeShip_Click_1(object sender, EventArgs e)
+        private void buttonTakeShip_Click(object sender, EventArgs e)
         {
             if (listBoxLevels.SelectedIndex > -1)
             {
@@ -104,9 +70,10 @@ namespace WindowsFormsApp5
                     }
                 }
             }
+
         }
 
-        private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+        private void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
 
         }
@@ -116,6 +83,8 @@ namespace WindowsFormsApp5
             port.LevelUp();
             listBoxLevels.SelectedIndex = port.getCurrentLevel;
             Draw();
+
+
         }
 
         private void buttonDown_Click(object sender, EventArgs e)
@@ -123,6 +92,37 @@ namespace WindowsFormsApp5
             port.LevelDown();
             listBoxLevels.SelectedIndex = port.getCurrentLevel;
             Draw();
+
         }
+
+        private void pictureBoxTakeShip_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSetShip_Click_1(object sender, EventArgs e)
+        {
+            form = new Form3();
+            form.AddEvent(AddShip);
+            form.Show();
+
+        }
+        private void AddShip(ITransport ship)
+        {
+            if (ship != null)
+            {
+                int place = port.PutShipInPort(ship);
+                if (place > -1)
+                {
+                    Draw();
+                    MessageBox.Show("Ваше место: " + place);
+                }
+                else
+                {
+                    MessageBox.Show("Машину не удалось поставить");
+                }
+            }
+        }
+
     }
 }
