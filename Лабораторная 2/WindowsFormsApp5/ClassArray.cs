@@ -25,7 +25,7 @@ namespace WindowsFormsApp5
         {
             if (p.places.Count == p.maxCount)
             {
-                return -1;
+                throw new PortOverflowException();
             }
             for (int i = 0; i < p.places.Count; i++)
             {
@@ -47,7 +47,7 @@ namespace WindowsFormsApp5
                 p.places.Remove(index);
                 return ship;
             }
-            return p.defaultValue;
+            throw new PortIndexOutOfRangeException();
         }
         private bool CheckFreePlace(int index)
         {
