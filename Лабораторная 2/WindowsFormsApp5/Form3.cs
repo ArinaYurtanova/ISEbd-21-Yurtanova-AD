@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,8 +13,9 @@ namespace WindowsFormsApp5
 {
     public partial class Form3 : Form
     {
+        
         ITransport ship = null;
-
+        
         public ITransport getShip { get { return ship; } }
         private void DrawShip()
         {
@@ -40,10 +42,11 @@ namespace WindowsFormsApp5
         }
 
 
-
+        private Logger log;
         public Form3()
         {
             InitializeComponent();
+            log = LogManager.GetCurrentClassLogger();
             panelBlack.MouseDown += panelColor_MouseDown;
             panelViolet.MouseDown += panelColor_MouseDown;
             panelOrange.MouseDown += panelColor_MouseDown;
@@ -60,6 +63,7 @@ namespace WindowsFormsApp5
         private void labelShip_MouseDown(object sender, MouseEventArgs e)
         {
             labelShip.DoDragDrop(labelShip.Text, DragDropEffects.Move | DragDropEffects.Copy);
+            log.Info("Перетащили корабль");
         }
 
         private void labelShip_Click(object sender, EventArgs e)
@@ -78,6 +82,7 @@ namespace WindowsFormsApp5
                     ship = new Liner(40, 1500, 10000, Color.White, true, true, true, true, Color.Black);
                     break;
             }
+            log.Info("Отрисовали");
             DrawShip();
         }
 
@@ -88,12 +93,18 @@ namespace WindowsFormsApp5
             else
                 e.Effect = DragDropEffects.None;
         }
-
+        private void panelColor_MouseDown(object sender, MouseEventArgs e)
+        {
+            (sender as Control).DoDragDrop((sender as Control).BackColor,
+                DragDropEffects.Move | DragDropEffects.Copy);
+            
+        }
         private void labelBaseColor_DragDrop(object sender, DragEventArgs e)
         {
             if (ship != null)
             {
                 ship.SetMainColor((Color)e.Data.GetData(typeof(Color)));
+                log.Info("Добавили основной цвет");
                 DrawShip();
             }
 
@@ -107,11 +118,7 @@ namespace WindowsFormsApp5
                 e.Effect = DragDropEffects.None;
 
         }
-        private void panelColor_MouseDown(object sender, MouseEventArgs e)
-        {
-            (sender as Control).DoDragDrop((sender as Control).BackColor,
-                DragDropEffects.Move | DragDropEffects.Copy);
-        }
+        
         private void labelDopColor_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(typeof(Color)))
@@ -127,6 +134,7 @@ namespace WindowsFormsApp5
                 if (ship is Liner)
                 {
                     (ship as Liner).SetDopColor((Color)e.Data.GetData(typeof(Color)));
+                    log.Info("Добавили дополнительный цвет");
                     DrawShip();
                 }
             }
@@ -141,6 +149,7 @@ namespace WindowsFormsApp5
                 eventAddShip(ship);
             }
             Close();
+            log.Info("Добавили заказ");
 
         }
 
@@ -168,6 +177,7 @@ namespace WindowsFormsApp5
         private void labelLiner_MouseDown(object sender, MouseEventArgs e)
         {
             labelLiner.DoDragDrop(labelLiner.Text, DragDropEffects.Move | DragDropEffects.Copy);
+            log.Info("Перетащили линкор");
         }
 
         private void labelBaseColor_Click(object sender, EventArgs e)
@@ -178,6 +188,12 @@ namespace WindowsFormsApp5
         private void labelLiner_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+            log.Info("Отменили заказ");
         }
     }
 }

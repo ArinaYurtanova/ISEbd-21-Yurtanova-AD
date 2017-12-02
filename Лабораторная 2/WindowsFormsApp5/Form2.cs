@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,9 +15,11 @@ namespace WindowsFormsApp5
     {
         Port port;
         Form3 form;
+        private Logger log;
         public Form2()
         {
             InitializeComponent();
+            log = LogManager.GetCurrentClassLogger();
             port = new Port(5);
             for (int i = 1; i < 6; i++)
             {
@@ -54,19 +57,25 @@ namespace WindowsFormsApp5
                 string level = listBoxLevels.Items[listBoxLevels.SelectedIndex].ToString();
                 if (maskedTextBox1.Text != "")
                 {
+                    try
+                    { 
                     ITransport ship = port.GetShipInPort(Convert.ToInt32(maskedTextBox1.Text));
-                    if (ship != null)
-                    {
+                    
                         Bitmap bmp = new Bitmap(pictureBoxTakeShip.Width, pictureBoxTakeShip.Height);
                         Graphics gr = Graphics.FromImage(bmp);
                         ship.setPosition(5, 5);
                         ship.drawShip(gr);
                         pictureBoxTakeShip.Image = bmp;
+                        log.Info("Забрать корабль" );
                         Draw();
                     }
-                    else
+                    catch (PortIndexOutOfRangeException ex)
                     {
-                        MessageBox.Show("Извинте, на этом месте нет корабля");
+                        MessageBox.Show(ex.Message, " Неверный номер", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, " Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -82,6 +91,7 @@ namespace WindowsFormsApp5
         {
             port.LevelUp();
             listBoxLevels.SelectedIndex = port.getCurrentLevel;
+            log.Info("Переход на уровень выше  Текущий уровень:" + port.getCurrentLevel);
             Draw();
 
 
@@ -91,6 +101,7 @@ namespace WindowsFormsApp5
         {
             port.LevelDown();
             listBoxLevels.SelectedIndex = port.getCurrentLevel;
+            log.Info("Переход на уровень ниже Текущий уровень:" + port.getCurrentLevel);
             Draw();
 
         }
@@ -105,21 +116,25 @@ namespace WindowsFormsApp5
             form = new Form3();
             form.AddEvent(AddShip);
             form.Show();
-
+            log.Info("Заказать корабль");
         }
         private void AddShip(ITransport ship)
         {
             if (ship != null)
             {
-                int place = port.PutShipInPort(ship);
-                if (place > -1)
+                try
                 {
+                    int place = port.PutShipInPort(ship);
                     Draw();
                     MessageBox.Show("Ваше место: " + place);
                 }
-                else
+                catch (PortOverflowException ex)
                 {
-                    MessageBox.Show("Корабль не удалось поставить");
+                    MessageBox.Show(ex.Message, " Ошибка переполнения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, " Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -132,6 +147,7 @@ namespace WindowsFormsApp5
                 {
                     MessageBox.Show("Сохранение прошло успешно", "",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    log.Info("Сохранение прошло успешно");
                 }
                 else
                 {
@@ -150,6 +166,7 @@ namespace WindowsFormsApp5
                 {
                     MessageBox.Show("Загрузили", "",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    log.Info("Загрузили");
                 }
                 else
                 {
