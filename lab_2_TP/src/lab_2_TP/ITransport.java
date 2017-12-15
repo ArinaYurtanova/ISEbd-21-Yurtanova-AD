@@ -1,4 +1,5 @@
 package lab_2_TP;
+
 import java.awt.Graphics;
 
 public interface ITransport {
