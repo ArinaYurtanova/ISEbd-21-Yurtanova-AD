@@ -1,5 +1,4 @@
 package lab_2_TP;
-
 import java.awt.Color;
 import java.awt.Graphics;
 
