@@ -7,8 +7,76 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp5
 {
-    public class PassengerShip : Vessel
+    public class PassengerShip : Vessel, IComparable<PassengerShip>,IEquatable<PassengerShip>
     {
+        public int CompareTo(PassengerShip other)
+        {
+            if (other==null)
+            {
+                return 1;
+            }
+            if(MaxSpeed!=other.MaxSpeed)
+            {
+                return MaxSpeed.CompareTo(other.MaxSpeed);
+            }
+            if(MaxCountPassengers!=other.MaxCountPassengers)
+            {
+                return MaxCountPassengers.CompareTo(other.MaxCountPassengers);
+            }
+            if (Weight!=other.Weight)
+            {
+                return Weight.CompareTo(other.Weight);
+            }
+            if(ColorBody!=other.ColorBody)
+            {
+                return ColorBody.Name.CompareTo(other.ColorBody);
+            }
+            return 0;
+        }
+        public bool Equals(PassengerShip other)
+        {
+            if(other==null)
+            {
+                return false;
+            }
+            if(MaxSpeed!=other.MaxSpeed)
+            {
+                return false;
+            }
+            if(MaxCountPassengers!=other.MaxCountPassengers)
+            {
+                return false;
+            }
+            if (Weight!=other.Weight)
+            {
+                return false;
+            }
+            if (ColorBody!=other.ColorBody)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool Equals (Object obj)
+        {
+            if (obj==null)
+            {
+                return false;
+            }
+            PassengerShip shipObj = obj as PassengerShip;
+            if (shipObj==null)
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(shipObj);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return MaxSpeed.GetHashCode();
+        }
         public override int MaxSpeed
         {
 
