@@ -7,13 +7,100 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp5
 {
-    public class Liner : PassengerShip
+    public class Liner : PassengerShip, IComparable<Liner>, IEquatable<Liner>
     {
         private Color dopColor;
         private bool pool;
         private bool palyb;
         private bool aquapark;
         private bool restaurant;
+
+        public int CompareTo(Liner other)
+        {
+            var res = (this is PassengerShip).CompareTo(other is PassengerShip);
+            if (res!=0)
+            {
+                return res;
+            }
+            if (pool!=other.pool)
+            {
+                return pool.CompareTo(other.pool);
+            }
+            if(palyb!=other.palyb)
+            {
+                return palyb.CompareTo(other.palyb);
+            }
+            if (restaurant!=other.restaurant)
+            {
+                return restaurant.CompareTo(other.restaurant);
+            }
+            if (aquapark!=other.aquapark)
+            {
+                return aquapark.CompareTo(other.aquapark);
+            }
+            if (ColorBody != other.ColorBody)
+            {
+                return ColorBody.Name.CompareTo(other.ColorBody);
+            }
+            if (dopColor!=other.dopColor)
+            {
+                return dopColor.Name.CompareTo(other.dopColor.Name);
+            }
+            return 0;
+        }
+        public bool Equals(Liner other)
+        {
+            var res = (this is PassengerShip).Equals(other is PassengerShip);
+            if (!res )
+            {
+                return res;
+            }
+            if (pool != other.pool)
+            {
+                return false;
+            }
+            if (palyb != other.palyb)
+            {
+                return false;
+            }
+            if (restaurant != other.restaurant)
+            {
+                return false;
+            }
+            if (aquapark != other.aquapark)
+            {
+                return false;
+            }
+            if (ColorBody != other.ColorBody)
+            {
+                return false;
+            }
+            if (dopColor != other.dopColor)
+            {
+                return false;
+            }
+            return true;
+        }
+        public override bool Equals(object obj)
+        {
+            if(obj==null)
+            {
+                return false;
+            }
+            Liner shipObj = obj as Liner;
+            if (shipObj==null)
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(shipObj);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
         public Liner(int maxSpeed, int maxCountPassengers, double weight, Color color, bool pool, bool palyb, bool aquapark, bool restaurant, Color dopColor) : base(maxCountPassengers, maxSpeed, weight, color)
         {
             this.dopColor = dopColor;

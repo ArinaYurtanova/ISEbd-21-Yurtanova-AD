@@ -132,6 +132,10 @@ namespace WindowsFormsApp5
                 {
                     MessageBox.Show(ex.Message, " Ошибка переполнения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                catch (PortAlreadyHaveException ex)
+                {
+                    MessageBox.Show(ex.Message, " Ошибка совпадения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, " Общая ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -191,6 +195,12 @@ namespace WindowsFormsApp5
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            port.Sort();
+            Draw();
         }
     }
 }

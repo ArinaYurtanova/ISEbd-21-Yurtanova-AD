@@ -72,6 +72,7 @@
     <Compile Include="Liner.cs" />
     <Compile Include="PassengerShip.cs" />
     <Compile Include="Port.cs" />
+    <Compile Include="PortAlreadyHaveException.cs" />
     <Compile Include="PortIndexOutOfRangeException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -52,16 +52,17 @@ namespace WindowsFormsApp5
         public void Draw(Graphics g, int weidth, int height)
         {
             DrawMarking(g);
-            for (int i = 0; i < countPlaces; i++)
+            int i = 0;
+            foreach (var ship in portStages[currentLevel])
             {
-                var ship = portStages[currentLevel][i];
-                if (ship != null)
-                {
-                    ship.setPosition(5 + i / 5 * placeSizeWidth + 5, i % 5 * placeSizeHeight + 15);
-                    ship.drawShip(g);
-                }
-
-            }
+                ship.setPosition(5 + i / 5 * placeSizeWidth + 5, i % 5 * placeSizeHeight + 15);
+                ship.drawShip(g);
+                i++;
+            } 
+        }
+        public void Sort()
+        {
+            portStages.Sort();
         }
         private void DrawMarking(Graphics g)
         {
