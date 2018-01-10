@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Port {
-	ClassArray<ITransport> port;
+	
 	 	 
 	 	int countPlaces = 10;
 	 	ArrayList<ClassArray<ITransport>> portStages;
@@ -14,8 +14,7 @@ public class Port {
 	 	int currentLevel; 
 	 	public Port(int countStages)
 	 	{
-	 		port = new ClassArray<ITransport>(countPlaces, null);
-	 		  		portStages = new ArrayList<ClassArray<ITransport>>(countStages);
+	 			 	portStages = new ArrayList<ClassArray<ITransport>>(countStages);
 	 		  		for (int i = 0; i < countStages; i++)
 	 		  		{
 	 		  			portStages.add(new ClassArray<ITransport>(countPlaces, null));
@@ -45,9 +44,9 @@ public class Port {
 	 	 		return portStages.get(currentLevel).plus(portStages.get(currentLevel), ship);
 	 	 	}
 	 	 
-	 	 	public ITransport GetLinerInPort(int ticket)
+	 	 	public ITransport GetLinerInPort(int ind)
 	 	 	{
-	 	 		return portStages.get(currentLevel).minus(portStages.get(currentLevel), ticket);
+	 	 		return portStages.get(currentLevel).minus(portStages.get(currentLevel), ind);
 	 	 	}
 	 	 
 	 	 	public void Draw(Graphics g,int width,int height)
@@ -55,11 +54,11 @@ public class Port {
 	 	 		DrawMarking(g);
 	 	 		for(int i = 0; i < countPlaces; i++)
 	 	 		{
-	 	 			ITransport liner = portStages.get(currentLevel).getLiner(i);
-	 	 			if (liner != null)
+	 	 			ITransport ship = portStages.get(currentLevel).getLiner(i);
+	 	 			if (ship != null)
 	 	 			{
-	 	 				liner.setPosition(0 + i / 5 * placeSizeWidth + 8, i % 5 * placeSizeHeight + 7);
-	 	 				liner.drawShip(g);
+	 	 				ship.setPosition(0 + i / 5 * placeSizeWidth + 8, i % 5 * placeSizeHeight + 7);
+	 	 				ship.drawShip(g);
 	 	 			}
 	 	 		}
 	 	 		
