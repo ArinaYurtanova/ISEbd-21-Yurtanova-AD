@@ -2,9 +2,17 @@ package lab_2_TP;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Port {
+public class Port implements Serializable{
 	
 	 	 
 	 	int countPlaces = 10;
@@ -77,6 +85,39 @@ public class Port {
 	 	 		}
 	 	 		
 		 	}
+	 	 	public boolean save(String fileName) throws IOException {
+	 	 		 
+	 	 		 			FileOutputStream save = null;
+	 	 		 			try {
+	 	 		 				save = new FileOutputStream(fileName);
+	 	 		 			} catch (FileNotFoundException e) {
+	 	 		 				// TODO Auto-generated catch block
+	 	 		 				e.printStackTrace();
+	 	 		 			}
+	 	 		 			ObjectOutputStream obSave = new ObjectOutputStream(save);
+	 	 		 			System.out.println(portStages.get(0).getLiner(0).getInfo());
+	 	 		 			obSave.writeObject(portStages);
+	 	 		 
+	 	 		 			return true;
+	 	 		 		}
+	 	 		 
+	 	 		 		public boolean load(String filename) {
+	 	 		 			try {
+	 	 		 				ObjectInputStream obLoad = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+	 	 		 				try {
+	 	 		 					portStages = (ArrayList<ClassArray<ITransport>>)obLoad.readObject();
+	 	 		 					System.out.println(portStages.get(0).getLiner(0).getInfo());
+	 	 		 				} catch (ClassNotFoundException e) {
+	 	 		 					// TODO Auto-generated catch block
+	 	 		 					e.printStackTrace();
+	 	 		 				}
+	 	 		 			} catch (IOException e) {
+	 	 		 				// TODO Auto-generated catch block
+	 	 		 				e.printStackTrace();
+	 	 					}
+	 	 		 			
+	 	 		 			return true;
+	 	 		 		}
 	 	 
 	 	 
 }

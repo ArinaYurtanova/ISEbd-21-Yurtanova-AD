@@ -2,7 +2,8 @@ package lab_2_TP;
 
 import java.awt.Color;
 import java.awt.Graphics;
-public interface ITransport {
+import java.io.Serializable;
+public interface ITransport extends Serializable {
 	void moveShip(Graphics g);
 
 	void drawShip(Graphics g);
@@ -14,4 +15,10 @@ public interface ITransport {
 	int getPassenger();
 	
 	void setMainColor(Color color);
+
+	String getInfo();
+	
+	
+
+	
 }
