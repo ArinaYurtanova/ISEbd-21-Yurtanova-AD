@@ -1,7 +1,7 @@
 package lab_2_TP;
 
+import java.awt.Color;
 import java.awt.Graphics;
-
 public interface ITransport {
 	void moveShip(Graphics g);
 
@@ -12,4 +12,6 @@ public interface ITransport {
 	void loadPassenger(int count);
 
 	int getPassenger();
+	
+	void setMainColor(Color color);
 }

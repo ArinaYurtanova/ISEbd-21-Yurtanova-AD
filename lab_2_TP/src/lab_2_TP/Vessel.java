@@ -43,6 +43,10 @@ public abstract class Vessel implements ITransport {
 		startPosX = x;
 		startPosY = y;
 	}
+	public void setMainColor(Color color)
+	 	{
+	 		ColorBody = color;
+	 	}
 }
 
 

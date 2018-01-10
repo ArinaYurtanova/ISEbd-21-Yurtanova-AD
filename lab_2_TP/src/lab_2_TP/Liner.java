@@ -53,4 +53,8 @@ public class Liner extends PassengerShip {
 			g.fillRect(startPosX, startPosY + 20, 20, 20);
 		}
 	}
+
+	public void setDopColor(Color f) {
+		dopColor = f;
+	}
 }
