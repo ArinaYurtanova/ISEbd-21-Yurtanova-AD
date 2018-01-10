@@ -1,13 +1,15 @@
 package lab_2_TP;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serializable;
 
-public abstract class Vessel implements ITransport {
+public abstract class Vessel implements ITransport, Serializable {
+	private static final long serialVersionUID = -771902464810205743L;
 	protected int startPosX;
 	protected int startPosY;
 	public int MaxCountPassengers;
 	public int MaxSpeed;
-	public Color ColorBody;
+	transient public Color ColorBody;
 	public int Weight;
 
 	public abstract void moveShip(Graphics g);
@@ -47,6 +49,7 @@ public abstract class Vessel implements ITransport {
 	 	{
 	 		ColorBody = color;
 	 	}
+	public abstract String getInfo();
 }
 
 

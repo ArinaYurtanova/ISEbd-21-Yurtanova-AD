@@ -8,14 +8,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import java.awt.SystemColor;
+import java.io.IOException;
+
 import javax.swing.border.BevelBorder;
 
 public class Form2 {
@@ -61,7 +67,7 @@ public class Form2 {
 		port = new Port(5);
 		initialize();
 		for (int i = 0; i < 5; i++) {
-			 			 			elements[i] = "Óðîâåíü" + (i+1);
+			 			 			elements[i] = "Ð£Ñ€Ð¾Ð²ÐµÐ½ÑŒ" + (i+1);
 			 			 		}
 		list.setSelectedIndex(port.getCurrentLevel());
 	}
@@ -155,8 +161,51 @@ public class Form2 {
 		 		});
 		 		btnGet.setBounds(396, 160, 89, 23);
 		 		frame.getContentPane().add(btnGet);
-		 
-}
+				JMenuBar menuBar = new JMenuBar();
+				 		menuBar.setToolTipText("");
+				 		frame.setJMenuBar(menuBar);
+				 		
+				 		JMenu mnNewMenu = new JMenu("\u0424\u0430\u0439\u043B");
+				 		menuBar.add(mnNewMenu);
+				 		
+				 		JMenuItem menuItem = new JMenuItem("\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
+				 		mnNewMenu.add(menuItem);
+				 		
+				 		JMenuItem menuItem_1 = new JMenuItem("\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C");
+				 		mnNewMenu.add(menuItem_1);
+				 		
+				 		menuItem.addActionListener(new ActionListener() {
+				 			public void actionPerformed(ActionEvent arg0) {
+				 
+				 				JFileChooser filesave = new JFileChooser();
+				 
+				 				if (filesave.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
+				 					try {
+				 						if (port.save(filesave.getSelectedFile().getPath()))
+				 						if (filesave.getSelectedFile().getPath() != null)
+				 								JOptionPane.showMessageDialog(frame, "Save");
+				 					} catch (IOException e) {
+				 						// TODO Auto-generated catch block
+				 						e.printStackTrace();
+				 					}
+				 				}
+				 			}
+				 		});
+				 
+				 		menuItem_1.addActionListener(new ActionListener() {
+				 			public void actionPerformed(ActionEvent arg0) {
+				 				JFileChooser fileopen = new JFileChooser();
+				 				if (fileopen.showDialog(null, "Open") == JFileChooser.APPROVE_OPTION) {
+				 					if (port.load(fileopen.getSelectedFile().getPath()))
+				 						if (fileopen.getSelectedFile().getPath() != null)
+				 							JOptionPane.showMessageDialog(frame, "Load");
+				 				}
+				 				panel.repaint();
+				 			}
+				 		});
+				 		
+				  	}
+
 	private boolean checkPlace(String str) {
 		try {
 			Integer.parseInt(str);

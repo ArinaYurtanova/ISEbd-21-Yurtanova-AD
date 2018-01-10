@@ -2,9 +2,13 @@ package lab_2_TP;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Random;
 
-public class PassengerShip extends Vessel {
+public class PassengerShip extends Vessel implements Serializable {
 	protected int countPassengers;
 	public int MaxCountPassengers;
 
@@ -77,5 +81,37 @@ public class PassengerShip extends Vessel {
 	public int getPassenger() {
 		return 0;
 	}
-
+	public PassengerShip(String info)
+	     {
+	         String[] strs = info.split(info, ';');
+	         if(strs.length==5)
+	         {
+	             MaxSpeed = Integer.parseInt(strs[0]);
+	             MaxCountPassengers = Integer.parseInt(strs[1]);
+	             ColorBody = Color.decode(strs[2]);
+	             Weight = Integer.parseInt(strs[3]);
+	             countPassengers = Integer.parseInt(strs[4]);
+	             
+	         }
+	     }
+	 
+	     public String getInfo()
+	     {           
+	         return MaxSpeed + ";" + MaxCountPassengers + ";" + ColorBody + ";" + Weight + ";" + countPassengers;
+	     }
+	     
+	     private void writeObject(ObjectOutputStream s) throws IOException {
+	         s.defaultWriteObject();
+	         s.writeInt(ColorBody.getRed());
+	         s.writeInt(ColorBody.getGreen());
+	         s.writeInt(ColorBody.getBlue());
+	     }
+	  
+	     private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+	         s.defaultReadObject();
+	         int red = s.readInt();
+	         int green = s.readInt();
+	         int blue = s.readInt();
+	         ColorBody = new Color(red, green, blue);
+	     }
 }

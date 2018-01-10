@@ -1,9 +1,11 @@
 package lab_2_TP;
 
+import java.io.Serializable;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class ClassArray<T extends ITransport> {
+public class ClassArray<T extends ITransport> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private T defaultValue;
 	private Dictionary<Integer, T> places;
 	int maxCount;
