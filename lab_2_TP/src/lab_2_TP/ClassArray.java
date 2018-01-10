@@ -22,9 +22,9 @@ public class ClassArray<T extends ITransport> implements Serializable {
 		return defaultValue;
 	}
 
-	public static <T extends ITransport> int plus(ClassArray<T> p, T ship) {
-		if (p.places.size() == p.maxCount)
-			return -1;
+	public static <T extends ITransport> int plus(ClassArray<T> p, T ship) throws PortOverflowException
+	{
+	if (p.places.size() == p.maxCount) throw new PortOverflowException();
 		for (int i = 0; i < p.places.size(); i++) {
 			if (p.CheckFreePlace(i)) {
 				p.places.put(i, ship);
@@ -35,13 +35,14 @@ public class ClassArray<T extends ITransport> implements Serializable {
 		return p.places.size() - 1;
 	}
 
-	public static <T extends ITransport> T minus(ClassArray<T> p, int ind) {
-		if (p.places.get(ind) != null) {
+public static <T extends ITransport> T minus(ClassArray<T> p, int ind) throws PortIndexOutOfRangeException
+{		
+if (p.places.get(ind) != null) {
 			T ship = p.places.get(ind);
 			p.places.remove(ind);
 			return ship;
 		}
-		return p.defaultValue;
+throw new PortIndexOutOfRangeException();
 	}
 
 	public boolean CheckFreePlace(int ind) {

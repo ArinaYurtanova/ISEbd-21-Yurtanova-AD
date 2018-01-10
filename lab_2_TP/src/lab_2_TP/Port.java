@@ -47,12 +47,12 @@ public class Port implements Serializable{
 	 		  			currentLevel--;			
 	 		  			}
 	 		   	}
-	 	 	public int PutLinerInPort(ITransport ship)
+	 		  	public int PutLinerInPort(ITransport ship) throws PortOverflowException
 	 	 	{
 	 	 		return portStages.get(currentLevel).plus(portStages.get(currentLevel), ship);
 	 	 	}
 	 	 
-	 	 	public ITransport GetLinerInPort(int ind)
+	 		  	public ITransport GetLinerInPort(int ind) throws PortIndexOutOfRangeException
 	 	 	{
 	 	 		return portStages.get(currentLevel).minus(portStages.get(currentLevel), ind);
 	 	 	}

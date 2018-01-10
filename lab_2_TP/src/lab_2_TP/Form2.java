@@ -21,6 +21,9 @@ import javax.swing.JTextField;
 
 import java.awt.SystemColor;
 import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.border.BevelBorder;
 
@@ -43,6 +46,8 @@ public class Form2 {
 	private JTextField Number;
 	Form3 select;
 	private String[] elements = new String[6];
+	private static Logger log;
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -65,152 +70,196 @@ public class Form2 {
 		maxCountPass = 1500;
 		weight = 10000;
 		port = new Port(5);
+		log = Logger.getLogger(Form2.class.getName());
+		FileHandler fh = null;
+		try {
+			fh = new FileHandler("D:\\log.txt");
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log.addHandler(fh);
 		initialize();
 		for (int i = 0; i < 5; i++) {
-			 			 			elements[i] = "Уровень" + (i+1);
-			 			 		}
+			elements[i] = "Уровень" + (i + 1);
+		}
 		list.setSelectedIndex(port.getCurrentLevel());
 	}
+
 	public void getShip() {
-		 		select = new Form3(frame);
-		 		if (select.res()) {
-		 			ITransport ship = select.getPlane();
-		 			int place = port.PutLinerInPort(ship);
-		 			panel.repaint();
-		 			JOptionPane.showMessageDialog(panel, "Your place: "+ place);
-		 		}
-		 	}
-		 
+		select = new Form3(frame);
+		if (select.res()) {
+			ITransport ship = select.getPlane();
+			int place = 0;
+			try {
+				place = port.PutLinerInPort(ship);
+				log.log(Level.INFO, "Место корабля: " + place);
+			} catch (PortOverflowException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Переполнен порт");
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(null, "Общая ошибка");
+			}
+			panel.repaint();
+			JOptionPane.showMessageDialog(panel, "Your place: " + place);
+		}
+	}
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 550, 442);
-		 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 		frame.getContentPane().setLayout(null);
-		 
-		 	    panel = new Panel(port);
-		 	    panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		 		panel.setBounds(0, 0, 355, 449);
-		 		frame.getContentPane().add(panel);
-		 		
-		 
-		 		Number = new JTextField();
-		 		Number.setBounds(421, 228, 34, 23);
-		 		frame.getContentPane().add(Number);
-		 		Number.setColumns(10);
-		 
-		 		JLabel lblNewLabel = new JLabel("\u041C\u0435\u0441\u0442\u043E");
-		 		lblNewLabel.setBounds(365, 232, 46, 14);
-		 		frame.getContentPane().add(lblNewLabel);
-		 		
-		 		JPanel panelTake = new JPanel();
-		 		panelTake.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		 		panelTake.setBounds(368, 291, 127, 108);
-		 		frame.getContentPane().add(panelTake);
-		 
-		 		JButton btnTake = new JButton("\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
-		 		btnTake.addActionListener(new ActionListener() {
-		 			public void actionPerformed(ActionEvent arg0) {
-		 
-						if (checkPlace(Number.getText())) {
-		 					ITransport ship = port.GetLinerInPort(Integer.parseInt(Number.getText()));
-		 					Graphics gr = panelTake.getGraphics();
-		 					gr.clearRect(0, 0, panelTake.getWidth(), panelTake.getHeight());
-		 					ship.setPosition(10,35);
-		 					ship.drawShip(gr);
-		 					panel.repaint();
-		 				}
-		 
-		 			}
-		 		});
-		 		btnTake.setBounds(377, 257, 89, 23);
-		 		frame.getContentPane().add(btnTake);
-		 		
-		 		list = new JList(elements);
-		 		list.setBounds(396, 23, 99, 95);
-		 		frame.getContentPane().add(list);
-		
-		 		JButton btnLevelDown = new JButton("<<");
-		 		btnLevelDown.addActionListener(new ActionListener() {
-		 			public void actionPerformed(ActionEvent arg0) {
-		 				port.levelDown();
-		 				list.setSelectedIndex(port.getCurrentLevel());
-		 				panel.repaint();
-		 			}
-		 		});
-		 		btnLevelDown.setBounds(365, 129, 73, 23);
-		 		frame.getContentPane().add(btnLevelDown);
-		 
-		 		JButton btnLevelUp = new JButton(">>");
-		 		btnLevelUp.addActionListener(new ActionListener() {
-		 			public void actionPerformed(ActionEvent e) {
-		 				port.levelUp();
-		 				list.setSelectedIndex(port.getCurrentLevel());
-		 				panel.repaint();
-		 			}
-		 		});
-		 		btnLevelUp.setBounds(461, 129, 63, 23);
-		 		frame.getContentPane().add(btnLevelUp);
-		 
-		 		JButton btnGet = new JButton("\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C");
-		 		btnGet.setForeground(Color.BLACK);
-		 		btnGet.addActionListener(new ActionListener() {
-		 			@SuppressWarnings("deprecation")
-		 			public void actionPerformed(ActionEvent e) {
-		 				getShip();
-		 			}
-		 		});
-		 		btnGet.setBounds(396, 160, 89, 23);
-		 		frame.getContentPane().add(btnGet);
-				JMenuBar menuBar = new JMenuBar();
-				 		menuBar.setToolTipText("");
-				 		frame.setJMenuBar(menuBar);
-				 		
-				 		JMenu mnNewMenu = new JMenu("\u0424\u0430\u0439\u043B");
-				 		menuBar.add(mnNewMenu);
-				 		
-				 		JMenuItem menuItem = new JMenuItem("\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
-				 		mnNewMenu.add(menuItem);
-				 		
-				 		JMenuItem menuItem_1 = new JMenuItem("\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C");
-				 		mnNewMenu.add(menuItem_1);
-				 		
-				 		menuItem.addActionListener(new ActionListener() {
-				 			public void actionPerformed(ActionEvent arg0) {
-				 
-				 				JFileChooser filesave = new JFileChooser();
-				 
-				 				if (filesave.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
-				 					try {
-				 						if (port.save(filesave.getSelectedFile().getPath()))
-				 						if (filesave.getSelectedFile().getPath() != null)
-				 								JOptionPane.showMessageDialog(frame, "Save");
-				 					} catch (IOException e) {
-				 						// TODO Auto-generated catch block
-				 						e.printStackTrace();
-				 					}
-				 				}
-				 			}
-				 		});
-				 
-				 		menuItem_1.addActionListener(new ActionListener() {
-				 			public void actionPerformed(ActionEvent arg0) {
-				 				JFileChooser fileopen = new JFileChooser();
-				 				if (fileopen.showDialog(null, "Open") == JFileChooser.APPROVE_OPTION) {
-				 					if (port.load(fileopen.getSelectedFile().getPath()))
-				 						if (fileopen.getSelectedFile().getPath() != null)
-				 							JOptionPane.showMessageDialog(frame, "Load");
-				 				}
-				 				panel.repaint();
-				 			}
-				 		});
-				 		
-				  	}
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+
+		panel = new Panel(port);
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null,
+				null));
+		panel.setBounds(0, 0, 355, 449);
+		frame.getContentPane().add(panel);
+
+		Number = new JTextField();
+		Number.setBounds(421, 228, 34, 23);
+		frame.getContentPane().add(Number);
+		Number.setColumns(10);
+
+		JLabel lblNewLabel = new JLabel("\u041C\u0435\u0441\u0442\u043E");
+		lblNewLabel.setBounds(365, 232, 46, 14);
+		frame.getContentPane().add(lblNewLabel);
+
+		JPanel panelTake = new JPanel();
+		panelTake.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null,
+				null, null));
+		panelTake.setBounds(368, 291, 127, 108);
+		frame.getContentPane().add(panelTake);
+
+		JButton btnTake = new JButton(
+				"\u0417\u0430\u0431\u0440\u0430\u0442\u044C");
+		btnTake.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				if (checkPlace(Number.getText())) {
+					ITransport ship = null;
+					try {
+						ship = port.GetLinerInPort(Integer
+								.parseInt(Number.getText()));
+						log.log(Level.INFO,
+								"Получен корабль " + Number.getText());
+					} catch (PortIndexOutOfRangeException e) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "На указанном месте нет корабля");
+					} catch (Exception ex) {
+						JOptionPane.showMessageDialog(null, "Общая ошибка");
+					}
+					Graphics gr = panelTake.getGraphics();
+					gr.clearRect(0, 0, panelTake.getWidth(),
+							panelTake.getHeight());
+					ship.setPosition(10, 35);
+					ship.drawShip(gr);
+					panel.repaint();
+				}
+
+			}
+		});
+		btnTake.setBounds(377, 257, 89, 23);
+		frame.getContentPane().add(btnTake);
+
+		list = new JList(elements);
+		list.setBounds(396, 23, 99, 95);
+		frame.getContentPane().add(list);
+
+		JButton btnLevelDown = new JButton("<<");
+		btnLevelDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				port.levelDown();
+				list.setSelectedIndex(port.getCurrentLevel());
+				log.log(Level.INFO,"Переход на предыдущий уровень");
+				panel.repaint();
+			}
+		});
+		btnLevelDown.setBounds(365, 129, 73, 23);
+		frame.getContentPane().add(btnLevelDown);
+
+		JButton btnLevelUp = new JButton(">>");
+		btnLevelUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				port.levelUp();
+				list.setSelectedIndex(port.getCurrentLevel());
+				log.log(Level.INFO,"Переход на следующий уровень");
+				panel.repaint();
+			}
+		});
+		btnLevelUp.setBounds(461, 129, 63, 23);
+		frame.getContentPane().add(btnLevelUp);
+
+		JButton btnGet = new JButton(
+				"\u0417\u0430\u043A\u0430\u0437\u0430\u0442\u044C");
+		btnGet.setForeground(Color.BLACK);
+		btnGet.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				getShip();
+			}
+		});
+		btnGet.setBounds(396, 160, 89, 23);
+		frame.getContentPane().add(btnGet);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setToolTipText("");
+		frame.setJMenuBar(menuBar);
+
+		JMenu mnNewMenu = new JMenu("\u0424\u0430\u0439\u043B");
+		menuBar.add(mnNewMenu);
+
+		JMenuItem menuItem = new JMenuItem(
+				"\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C");
+		mnNewMenu.add(menuItem);
+
+		JMenuItem menuItem_1 = new JMenuItem(
+				"\u0417\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044C");
+		mnNewMenu.add(menuItem_1);
+
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				JFileChooser filesave = new JFileChooser();
+
+				if (filesave.showDialog(null, "Save") == JFileChooser.APPROVE_OPTION) {
+					try {
+						if (port.save(filesave.getSelectedFile().getPath()))
+							if (filesave.getSelectedFile().getPath() != null)
+								JOptionPane.showMessageDialog(frame, "Save");
+						log.log(Level.INFO,"Файл сохранен " + filesave.getSelectedFile().getName());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+
+		menuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileopen = new JFileChooser();
+				if (fileopen.showDialog(null, "Open") == JFileChooser.APPROVE_OPTION) {
+					if (port.load(fileopen.getSelectedFile().getPath()))
+						if (fileopen.getSelectedFile().getPath() != null)
+							JOptionPane.showMessageDialog(frame, "Load");
+					log.log(Level.INFO,"Файл загружен " + fileopen.getSelectedFile().getName());
+				}
+				panel.repaint();
+			}
+		});
+
+	}
 
 	private boolean checkPlace(String str) {
 		try {
 			Integer.parseInt(str);
 		} catch (Exception e) {
-			
+
 			return false;
 		}
 
@@ -219,5 +268,3 @@ public class Form2 {
 		return true;
 	}
 }
-
-
